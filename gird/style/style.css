@@ -1,0 +1,27 @@
+body{
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; 
+    margin: 0px;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.content{
+    width: 960px;
+    margin: 50px auto;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(6, minmax(200px, auto));
+    grid-auto-rows: minmax( 200px, auto);
+    grid-gap: 20px;
+}
+
+.content > *{
+    background-color: rgb(61, 216, 214);
+    padding: 30px;
+    overflow: auto;
+    border-radius: 30px;
+    /*  horizontal align items - start, end, center, stretch */
+    /* align-self: stretch; */
+    /*  vertical align items - start, end, center, stretch */
+    /* justify-self: stretch; */
+}
