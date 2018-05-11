@@ -1,0 +1,70 @@
+html, body{
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+.flex-pc{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+/* 
+.grand-parent:hover > .parent{
+    transform: rotateX(240deg) rotateY(120deg);
+} */
+
+.grand-parent{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.parent{
+    position: relative;
+    height: calc( 100vh - 94px );
+    transform: rotateX(0deg) rotateY(0deg);
+    transform-style: preserve-3d;
+    transition: 0.3s all ease-in-out;
+}
+
+.child{
+    background-color: #00808080;
+    width: 400px;
+    height: 400px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    font-size: 84px;
+    color: white;
+    box-shadow: inset 0px 0px 143px 0px black;
+}
+
+.child.front{
+    transform: translateZ(200px) ;
+}
+
+.child.back{
+    transform: rotateX(-180deg) translateZ(200px) ;
+}
+
+.child.left{
+    transform: rotateY(90deg) translateZ(200px) ;
+}
+
+.child.right{
+    transform: rotateY(-90deg) translateZ(200px) ;
+}
+
+.child.up{
+    transform: rotateX(90deg) translateZ(200px) ;
+}
+
+.child.down{
+    transform: rotateX(-90deg) translateZ(200px) ;
+}
+
+
