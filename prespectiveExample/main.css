@@ -1,0 +1,40 @@
+html, body{
+    font-family:  Verdana;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    position: relative;
+}
+
+.flex-pc{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.parent{
+    position: relative;
+    height: calc( 100vh - 94px );
+    transition: 0.3s all ease-in-out;
+     /* for 3d styling these two lines must insert  */
+    transform: perspective(593px); /*1*/
+    transform-style: preserve-3d; /*2*/
+    perspective-origin: top;
+}
+
+.child{
+    background-color: #00808080;
+    width: 400px;
+    height: 400px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    font-size: 84px;
+    color: white;
+    box-shadow: inset 0px 0px 143px 0px black;
+}
+
+.rotate{
+    transform: rotateY(40deg);
+}

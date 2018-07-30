@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Page Title</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+            html, body{
+                font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+                box-sizing: border-box;
+                margin: 0;
+                padding: 0;
+            }
+
+            .flex-pc{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .grand-parent{
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%, -50%);
+            }
+
+            .parent{
+                position: relative;
+                height: calc( 100vh - 94px );
+                transform: rotateX(0deg) rotateY(0deg);
+                transform-style: preserve-3d;
+                transition: 0.3s all ease-in-out;
+            }
+
+            .child{
+                background-color: #00808080;
+                width: 400px;
+                height: 400px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                position: absolute;
+                font-size: 84px;
+                color: white;
+                box-shadow: inset 0px 0px 143px 0px black;
+            }
+
+            .child.front{
+                transform: translateZ(200px) ;
+            }
+
+            .child.back{
+                transform: rotateX(-180deg) translateZ(200px) ;
+            }
+
+            .child.left{
+                transform: rotateY(90deg) translateZ(200px) ;
+            }
+
+            .child.right{
+                transform: rotateY(-90deg) translateZ(200px) ;
+            }
+
+            .child.up{
+                transform: rotateX(90deg) translateZ(200px) ;
+            }
+
+            .child.down{
+                transform: rotateX(-90deg) translateZ(200px) ;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Prespective Styling <strong>3D</strong></h1>
+        <hr>
+        <div class="grand-parent">
+            <div class="parent flex-pc">
+                <div class="child down">6</div>
+                <div class="child up">5</div>
+                <div class="child right">4</div>
+                <div class="child left">3</div>
+                <div class="child back">2</div>
+                <div class="child front">1</div>
+            </div>
+        </div>
+        <script>
+            cube = document.querySelector(".grand-parent .parent");
+            let valX = 0;
+            let valY = 0;
+
+            setInterval(()=>{
+                cube.style.transform=`rotateX(${valX}deg) rotateY(${valY}deg)`;
+                valX+=5;
+                valY+=5;
+            }, 50);
+        </script>
+    </body>
+</html>
