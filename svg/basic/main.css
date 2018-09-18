@@ -1,0 +1,9 @@
+polygon{
+    transition: 2s all ease-in;
+    transform: scale(0.6) rotateZ(0deg);
+}
+
+polygon:hover{
+    transform: scale(2) rotateZ(1080deg);
+}
+

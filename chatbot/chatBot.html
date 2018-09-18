@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ 
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+  <style>
+.chatWindow{
+    display: none;
+}
+//Chat icon start
+.chatIcon {
+  position: fixed;
+  right: 30px;
+  bottom: 85px;
+  background: #fff;
+  color: #777;
+  padding: 15px 17px;
+  cursor: pointer;
+  box-shadow: 0px 3px 13px 1px rgba(84, 84, 84, 0.1);
+  transition: background-color 0.3s ease;
+}
+.chatIcon:hover {
+  background-color: #fe6f41;
+  color: #fff;
+}
+.chatHeading .fa-times {
+  color: #777;
+  position: absolute;
+  right: 6px;
+  top: 5px;
+}
+.chatHeading .fa-times:hover {
+  color: #fe6f41;
+  cursor: pointer;
+}
+
+//Chat icon end
+
+//Chat window start
+.chatWindow{
+    position: fixed;
+    right: 0;
+    z-index: 9999999999;
+    background: #fff;
+    height: 500px;
+    bottom: 80px;
+    border: 1px solid #989898ba;
+}
+
+.chatbody{
+    width: 25vw;
+    padding: 0 10px 0px 10px;
+}
+.chatHeading {
+    padding: 10px;
+    color: #fff;
+}
+.chatList {
+    height: 422px;
+    max-height: 422px;
+    overflow-y: auto;
+}
+//Chat window close
+
+//Msg List
+.msgList {
+  padding: 0;
+}
+.msgList .adminMsg {
+  float: left;
+  display: block;
+  list-style-type: none;
+  margin-top: 5px;
+  padding: 5px;
+  border-radius: 0px 15px 2px 15px;
+}
+.msgList .adMsg {
+  background: #fe714138;
+  padding: 10px;
+  border-radius: 1px 6px 6px 18px;
+}
+.msgList .usMsg {
+  background: #f1f1f1;
+  padding: 10px;
+  border-radius: 3px 1px 12px 12px;
+}
+.msgList .userMsg {
+  float: right;
+  display: block;
+  list-style-type: none;
+  text-align: right;
+  margin-top: 5px;
+  padding: 5px;
+  border-radius: 0px 15px 2px 15px;
+}
+.msgList small {
+  color: #fe6f41;
+}
+
+
+.button.send-button{
+    border-radius: 0px;
+    background-color: #fe6f41;
+    color: #ffffff;
+    font-weight: bold;
+    padding: 11px 13px;
+    transition: 0.1s all ease-in;
+    border: none !important;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.mShiri{
+    position: absolute;
+    top: -48px;
+    right: 50%;
+    left: 40%;
+    border-radius: 50%;
+    border: 1px solid #aaa;
+}
+</style>
+</head>
+<body>
+
+
+  
+<div class="container">
+  <div class="row">
+
+<div class="chatIcon" onclick="showChatWindow()">
+ Open Chat
+</div>
+
+<div class="chatWindow">
+  <div class="chatHeading">
+   <!-- <img src="../../../assets/images/chatIconImages/chatIcon.png" class="img-fluid mShiri"/> -->
+  
+    <i class="fa fa-times" onclick="closeChatWindow()">X</i>
+  </div>
+  <div class="chatbody">
+    <div class="chatList">
+      <ul class="msgList" id="chatHistrory">
+        <li class="adminMsg">
+          <small>MShiri</small>
+          <div class="adMsg">Hello user,How can I help you</div>
+		 </li>
+        <li class="userMsg">
+            <small>User</small>
+          <div class="usMsg">How can I register for courses?</div>
+		 </li>
+		 
+		 
+		 
+      </ul>
+    </div>
+
+      <ul  id="showRelalted">
+      
+      </ul>
+	<!-- -->
+	
+	</div>
+	
+	
+	 
+    <div class="chatInput">
+      <div class="input-group">
+        <input type="text" class="form-control" id="inputText" onkeyup='comapareWithQuestions(this.value);' placeholder="Enter your query"/>
+        <div class="input-group-append">
+          <button class="button send-button" onclick="submitTextBox();" type="button"><i class="fa fa-paper-plane"><!-- --></i></button>  
+                <button id="start-record-btn" title="Start Recording">Start Recognition</button>
+                <button id="pause-record-btn" title="Pause Recording">Pause Recognition</button>
+                <p id="recording-instructions">Press the <strong>Start Recognition</strong> button and allow access.</p>
+		           
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+  </div>
+</div>
+ <script src="script.js"></script>
+<script  type="text/javascript">
+var faqs={};
+
+function submitTextBox(){
+ var appendChat= $("#chatHistrory");
+	var searchField = "question";
+var input=document.getElementById("inputText").value.toLowerCase();
+var isFount=false;
+for (var i=0 ; i < faqs.length ; i++){ 
+		var question=faqs[i][searchField].toLowerCase();
+		if (question==input) {
+		  $(appendChat).append('<li class="userMsg"><small>User</small><div class="usMsg">'+faqs[i][question]+'</div></li>'
+			+'<li class="adminMsg"><small>MShiri</small><div class="adMsg">'+faqs[i][answer]+'</div></li>');   
+             readOutLoud(faqs[i][answer]);				
+			isFount=true;	
+				break;
+		}
+	}
+	if(!isFount){
+	  $(appendChat).append('<li class="adminMsg"><small>MShiri</small><div class="adMsg">Sorry, could not understand that...</div></li>');   
+  readOutLoud('Sorry, could not understand that...');		  
+	}
+$('.chatList').animate({ scrollTop: $(document).height() }, "slow");
+}
+
+function comapareWithQuestions(searchContent){
+	var questionShow= $("#showRelalted");
+	var searchField = "question";
+	var id="id";
+	var searchVal = searchContent.toLowerCase();
+	$("#showRelalted").html("");
+	var tagetSearch=[];
+	for (var i=0 ; i < faqs.length ; i++){ 
+		var question=faqs[i][searchField].toLowerCase();
+		if (question.includes(searchVal) || searchVal.includes(question)) {
+		   $(questionShow).append("<li><a onclick='submitQuestion("+faqs[i][id]+")';>"+faqs[i][searchField]+"<a></li>");
+			tagetSearch.push(faqs[i][id]);		   
+		}
+	}
+	if(tagetSearch.length==1){
+	submitQuestion(tagetSearch[0]);
+	}
+}
+
+function submitQuestion(qtnId){
+	 $("#showRelalted").html("");
+	 $("#inputText").val("");
+	 var appendChat= $("#chatHistrory");
+	 
+	var answer = "answer";
+	var id="id";
+	var question="question";
+	for (var i=0 ; i < faqs.length ; i++){ 
+		if (faqs[i][id]==qtnId) {
+		   $(appendChat).append('<li class="userMsg"><small>User</small><div class="usMsg">'+faqs[i][question]+'</div></li>'
+			+'<li class="adminMsg"><small>MShiri</small><div class="adMsg">'+faqs[i][answer]+'</div></li>');   
+            readOutLoud(faqs[i][answer]);			
+		}
+	}
+	$('.chatList').animate({ scrollTop: $(document).height() }, "slow");
+
+}
+
+  function showChatWindow(){
+    let chatWin= document.querySelector('.chatWindow');
+    chatWin.setAttribute("style",'display:block;');
+	getFAQQuestion();
+  }
+
+ function closeChatWindow(){
+    let closechatWin= document.querySelector('.chatWindow');
+    closechatWin.setAttribute("style",'display:none');
+  }
+  function getFAQQuestion(){
+  $.ajax({
+		  type: "GET", 
+		  //url: "http://localhost:8080/lms-web/data/get/faq/list",
+		  url: "http://192.168.1.191:8080/lms-web/data/get/faq/list",
+		  //  url: "http://183.82.117.232:8085/lms-web/data/get/faq/list",
+		  success: function(response) {
+		if(response != null && response !="" && response !="null"){
+			 faqs=response;
+		  }
+		},
+		error : function(e) {
+			//e.message();
+			
+		}
+	 
+	});
+  
+  }
+
+
+</script>
+
+</body>
+</html>
+
+
+
+
+
+
+
